@@ -4,8 +4,7 @@ package com.company;
 import java.util.Scanner;
 
 import static com.company.Admin.userList;
-import static com.company.Main.boss;
-import static com.company.Main.userIndex;
+import static com.company.Main.*;
 
 public class User extends Account {
 
@@ -17,13 +16,24 @@ public class User extends Account {
         role = newrole;
         accountBalance = newaccountBalance;
         id = newid;
-        this.request= request;
+        this.sRequest= sRequest;
+        this.rRequest= rRequest;
 
     }
 
 
 
-    private Integer request;
+    private Integer sRequest;
+
+    public String getrRequest() {
+        return rRequest;
+    }
+
+    public void setrRequest(String rRequest) {
+        this.rRequest = rRequest;
+    }
+
+    private String rRequest;
     private String username;
     private String password;
 
@@ -48,30 +58,40 @@ public class User extends Account {
     }
     public static void deleteAccount(){
         Scanner scan = new Scanner(System.in);
-        System.out.println(userIndex);
-
         System.out.println("Write your Username and password to delete account:");
         System.out.println("Username:");
         String username= scan.nextLine();
         System.out.println("Password:");
-        String Password= scan.nextLine();
+        String password= scan.nextLine();
 
-
-        userList.remove(userIndex);
+        for (int i = 0; i < userList.size(); i++) {
+            if (userList.get(i).getUsername().equals(username) && password.equals(userList.get(i).getPassword())) {
+                userList.remove(i);
+            }
+        }
 
         userList.forEach(user -> {
-
             System.out.println(user.getUsername());
-
         });
     }
 
     public static void requestHigherSalary () {
-        System.out.println("how mutch more do you want?");
         Scanner scan = new Scanner(System.in);
-        int request = scan.nextInt();
-        userList.get(userIndex).setRequest(request);
-        Admin.viewRequests();
+        System.out.println("Request higher Salary or change of Role? Salary:1 Role:2 ");
+        int input = scan.nextInt();
+        switch (input){
+            case 1:
+                System.out.println("how mutch more do you want?");
+                int request = scan.nextInt();
+                userList.get(userIndex).setRequest(request);
+                break;
+            case 2:
+                System.out.println("Which role do you want?");
+                String bug = scan.nextLine();
+                String newRole= scan.nextLine();
+                userList.get(userIndex).setrRequest(newRole);
+                break;
+        }
 
     }
 
@@ -125,11 +145,11 @@ public class User extends Account {
     }
 
     public Integer getRequest() {
-        return request;
+        return sRequest;
     }
 
     public void setRequest(Integer request) {
-        this.request = request;
+        this.sRequest = request;
     }
 
 }

@@ -14,50 +14,28 @@ public class Main {
     static boolean isAdmin;
     static Integer userIndex;
 
-
     public static void main(String[] args) {
         // write your code here
-        userList.add(new User("alex", "asd", 2, 9, 4, "slave"));
+        userList.add(new User("alex", "asd", 1, 9, 6, "slave"));
         userList.add(new User("chips", "asd", 2, 3, 4, "asd"));
-        System.out.println("Welcome!");
-        Login.run();
+        System.out.println("Welcome to the Payrollsystem!");
+       /* Admin.plusOneMonth();*/
+        System.out.println(userList.size()+1);
         boolean inMenu = true;
-
+        while (inMenu) {
+            Login.run();
         if (!isAdmin) {
             userOptions();
         } else {
             adminOptions();
         }
-        while (inMenu) {
-            menu();
+
+
         }
 
     }
 
-    public static void menu() {
-        int menuInput = 0;
-        Scanner choose = new Scanner(System.in);
-        System.out.print("1 Admin login, 2 User login, 3 Quit.");
-        try {
-            menuInput = choose.nextInt();
-        } catch (Exception InputMismatchException) {
-            System.out.println("Invalid choice.");
 
-            menu();
-
-        }
-        switch (menuInput) {
-            case 1:
-                adminOptions();
-                break;
-            case 2:
-                userOptions();
-                break;
-            case 3:
-                System.exit(0);
-                break;
-        }
-    }
 
     public static void userOptions() {
 
@@ -67,12 +45,13 @@ public class Main {
 
         while (menuOptions) {
 
-            System.out.println("\n Things to do: \n" +
-                    "1 View your Account balance \n" +
+            System.out.println("\n Things to do as user: " + userList.get(userIndex).getUsername() +
+                    "\n1 View your Account balance \n" +
                     "2 View your Salary \n" +
                     "3 View your Role \n" +
                     "4 Request higher salary \n" +
-                    "5 Delete your account"
+                    "5 Delete your account \n"+
+                    "6 Log out"
             );
 
             userInput = scanUserInput.nextInt();
@@ -93,6 +72,10 @@ public class Main {
                 case 5:
                     User.deleteAccount();
                     break;
+                case 6:
+                    menuOptions = false;
+                    break;
+
             }
 
         }
@@ -111,7 +94,9 @@ public class Main {
                     "4 View Users and their Passwords\n" +
                     "5 View User Requests\n" +
                     "6 Create User\n" +
-                    "7 Delete Users\n"
+                    "7 Delete Users\n"+
+                    "8 Plus one month\n" +
+                    "9 Log out"
 
             );
 
@@ -142,6 +127,13 @@ public class Main {
                 case 7:
                     Admin.deleteUsers();
                     break;
+                case 8:
+                    Admin.plusOneMonth();
+                    break;
+                case 9:
+                    menuOptions = false;
+                    break;
+
                 default:
             }
         }
@@ -149,3 +141,31 @@ public class Main {
 
 
 }
+
+
+
+/*
+    public static void menu() {
+        int menuInput = 0;
+        Scanner choose = new Scanner(System.in);
+        System.out.print("1 Admin login, 2 User login, 3 Quit.");
+        try {
+            menuInput = choose.nextInt();
+        } catch (Exception InputMismatchException) {
+            System.out.println("Invalid choice.");
+
+            menu();
+
+        }
+        switch (menuInput) {
+            case 1:
+                adminOptions();
+                break;
+            case 2:
+                userOptions();
+                break;
+            case 3:
+                System.exit(0);
+                break;
+        }
+    }*/

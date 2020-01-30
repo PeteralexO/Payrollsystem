@@ -1,5 +1,3 @@
-
-
 package com.company;
 
 import java.util.Scanner;
@@ -10,9 +8,12 @@ import static com.company.Main.*;
 public class Login {
 
     public static void run() {
+
         boolean login = false;
+
         while (!login) {
-            System.out.println("Username:");
+
+            System.out.println("LOGIN \nUsername:");
             Scanner scan = new Scanner(System.in);
 
             String user = scan.nextLine();
@@ -28,12 +29,6 @@ public class Login {
                 }
             }
 
-          /*  if (user.equals(userList.get(0).getUsername()) && pass.equals(userList.get(0).getPassword()) ) {
-                System.out.println("Login in...");
-                login= true;
-                isAdmin = false;
-            }*/
-
             if (user.equals(boss.getUsername()) && pass.equals(boss.getPassword()) ) {
                 System.out.println("Login in...");
                 login= true;
@@ -43,17 +38,16 @@ public class Login {
             if(!login) {
                 System.out.println("Wrong Password or Username");
             }
-
-
-           /* if (pass.equals(userList.get(0).getPassword())) {
-                System.out.println("right Password");
-            } else {
-                System.out.println("wrong");
-            }*/
         }
     }
 }
 
+
+/* if (pass.equals(userList.get(0).getPassword())) {
+                System.out.println("right Password");
+            } else {
+                System.out.println("wrong");
+            }*/
 /*
 Admin.setLoginAsAdmin(true);
 
@@ -76,3 +70,8 @@ Admin.setLoginAsAdmin(true);
     }
 }
 */
+ /*  if (user.equals(userList.get(0).getUsername()) && pass.equals(userList.get(0).getPassword()) ) {
+                System.out.println("Login in...");
+                login= true;
+                isAdmin = false;
+            }*/
