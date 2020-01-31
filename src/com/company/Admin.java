@@ -1,6 +1,4 @@
 package com.company;
-
-
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.time.ZonedDateTime;
@@ -12,7 +10,8 @@ import java.util.concurrent.ScheduledFuture;
 import java.util.concurrent.TimeUnit;
 import java.util.regex.Pattern;
 
-import static com.company.Main.boss;
+import static com.company.Main.admin1;
+
 import static java.util.concurrent.TimeUnit.SECONDS;
 
 public class Admin extends Account {
@@ -25,6 +24,8 @@ public class Admin extends Account {
     private Integer salary;
     public static List<User> userList = new ArrayList<User>();
 
+
+    //Admin constructor
     public Admin(String newusername, String newpassword, int newid, int newaccountBalance, int newsalary, String newrole) {
         super(newusername, newpassword, newid, newaccountBalance, newsalary, newrole);
         username = newusername;
@@ -34,13 +35,13 @@ public class Admin extends Account {
         salary = newsalary;
         role = newrole;
     }
-    public static boolean stringContainsNumber( String userName )
-    {
+    // Method that checks if a string contains a number
+    public static boolean stringContainsNumber( String userName ) {
+
         return Pattern.compile( "[0-9]" ).matcher( userName).find();
     }
 
-
-    //String username, String password, Integer id, Integer accountBalance, Integer salary, String role
+    // Method that the admin uses to create a new User and puts it in the userlist.
     public static void createUser() {
 
         Scanner scan = new Scanner(System.in);
@@ -61,13 +62,6 @@ public class Admin extends Account {
             System.out.println("Username needs at least 1 number");
         }
 
-     /*   try {
-            username = scan.nextLine();
-        } catch (Exception InputMismatchException) {
-            System.out.println("Wrong input");
-            username = "chips";
-        }*/
-
         System.out.println("Role:");
         role = scan.nextLine();
         System.out.println("Password:");
@@ -79,95 +73,63 @@ public class Admin extends Account {
             }
             System.out.println("Password needs at least 1 number");
         }
-        /*password = scan.nextLine();*/
+
+        // Takes the size of the Arraylist and just add increase with one, to set the new Id
         id= userList.size()+1;
-        /*boolean wrongInput;
-
-        System.out.println("Id:");
-        wrongInput = false;*/
-
-     /*   while(true) {
-            System.out.println("Id");
-            id = scan.next();
-            try {
-                Integer.valueOf(id);
-            }
-            catch (NumberFormatException ne) {
-                System.out.println("do right bitch");
-            }
-        }*/
- /*    do{
-
-         try {
-             System.out.println("tset");
-             id = scan.nextInt();
-             break;
-         } catch (Exception InputMismatchException) {
-             System.out.println("Wrong input");
-
-
-
-
-         } }while (true);*/
-
 
         System.out.println("AccountBalance:");
         accountBalance = scan.nextInt();
         System.out.println("Salary:");
         salary = scan.nextInt();
 
+        User newUser = new User(username, password, id, accountBalance, salary, role);
 
-        User newuser = new User(username, password, id, accountBalance, salary, role);
-
-
-        userList.add(newuser);
+        userList.add(newUser);
+        System.out.println("List of Users:");
         userList.forEach(user -> {
-            System.out.println("Name : " + user.getUsername() + " | Id : " + user.getId())
-
-            ;
+            System.out.println("Name : " + user.getUsername() + " | Id : " + user.getId());
         });
-
-
     }
 
-    public static void viewUsersPasswords() {
-
+    // Prints out all the users UserNames and Passwords with a foreach and get methods.
+    public static void viewUsersPasswordsUsername() {
         userList.forEach(user -> {
-            System.out.println("Name : " + user.getUsername() + " | Password : " + user.getPassword())
-
-            ;
+            System.out.println("Name : " + user.getUsername() + " | Password : " + user.getPassword());
         });
 
     }
 
-  public static void plusOneMonth() {
+    // Simulate one month passing by increasing the users and admins Account balance with there salary.
+    public static void plusOneMonth() {
 
       System.out.println("One month has now passed, the users account balance is now: ");
+
       userList.forEach(user -> {
-
           user.setAccountBalance(user.getSalary()+user.getAccountBalance());
-
           System.out.println(user.getUsername() + "| Account balance: " + user.getAccountBalance() );
       });
-      boss.setAccountBalance(boss.getSalary()+boss.getAccountBalance());
 
-        //System.out.println(date.after(+1));
-        // cal.add(Calendar.MONTH, 1);
+      admin1.setAccountBalance(admin1.getSalary()+admin1.getAccountBalance());
+
     }
 
-
+    // Using a get method to view the admins Account Balance
     public static void viewAccountBalance() {
-
-        System.out.println("Your account balance is:" + boss.getAccountBalance());
+        System.out.println("Your account balance is:" + admin1.getAccountBalance());
     }
 
+    // Using a get method to view the admins Salary
     public static void viewSalary() {
-        System.out.println("Your salary is:" + boss.getSalary());
+        System.out.println("Your salary is:" + admin1.getSalary());
+    }
+    // Using a get method to view the admins role
+    public static void viewRole() {
+        System.out.println("Your role is:" + admin1.getRole());
     }
 
-    public static void viewRole() {
-        System.out.println("Your role is:" + boss.getRole());
-    }
+
+    // View the Requests that the users have send by looking at there object to see if there request variable.
+    // You can choose if you want to grant there request.
 
     public static void viewRequests() {
         Scanner scan = new Scanner(System.in);
@@ -182,52 +144,55 @@ public class Admin extends Account {
 
             System.out.println("which user:");
             String username = scan.nextLine();
-            System.out.println("Their Salary or Role? Salary:1 Role:2");
-            int rOrS = scan.nextInt();
+            boolean test= true;
 
-            switch (rOrS) {
-                case 1:
-                    for (int i = 0; i < userList.size(); i++) {
-                        if (userList.get(i).getUsername().equals(username)) {
-                            userList.get(i).setSalary(userList.get(i).getRequest());
-                        }
-                    }
-                    System.out.println("Users Salary is now changed");
-                    break;
-                case 2:
-
-                    for (int i = 0; i < userList.size(); i++) {
-                        if (userList.get(i).getUsername().equals(username)) {
-                            userList.get(i).setRole(userList.get(i).getrRequest());
-                        }
-                    }
-                    System.out.println("Users Role is now changed");
-                    break;
-            }
-
-
-            /*for (int i = 0; i < userList.size(); i++) {
+            for (int i = 0; i < userList.size(); i++) {
                 if (userList.get(i).getUsername().equals(username)) {
-                    userList.get(i).setSalary(userList.get(i).getRequest());
-                }
-            }*/
 
-        } else {
+                    System.out.println("Their Salary or Role? Salary:1 Role:2");
+                    int rOrS = scan.nextInt();
+
+                    switch (rOrS) {
+                        case 1:
+                            for (int e = 0; e < userList.size(); e++) {
+                                if (userList.get(e).getUsername().equals(username)) {
+                                    userList.get(e).setSalary(userList.get(e).getRequest());
+                                }
+                            }
+                            System.out.println("Users Salary is now changed");
+                            break;
+                        case 2:
+
+                            for (int e = 0; e < userList.size(); e++) {
+                                if (userList.get(e).getUsername().equals(username)) {
+                                    userList.get(e).setRole(userList.get(e).getrRequest());
+                                }
+                            }
+                            System.out.println("Users Role is now changed");
+                            break;
+                    }
+                    test= false;
+                    break;
+                }
+            }
+            while (test) {
+                System.out.println("invalid user");
+                break;
+            }
+        }
+        else {
             System.out.println("Request denied");
         }
 
-
-        /*if(input.equals("Y") || input.equals("y") ) {
-            userList.get(0).setSalary(userList.get(0).getRequest());
-        }*/
-
-
     }
 
+
+    // By typing the users Username and password the admin can delete a user.
     public static void deleteUsers() {
         System.out.println("List of Users:");
         userList.forEach(user -> {
-            System.out.println(user.getUsername());
+            System.out.println("User: "+ user.getUsername()+" | Password: "+ user.getPassword());
+
         });
         System.out.println("Name of User you want to delete:");
         Scanner scan = new Scanner(System.in);
@@ -241,6 +206,7 @@ public class Admin extends Account {
         }
     }
 
+    //Getters and setters
     public String getUsername() {
         return username;
     }
@@ -289,6 +255,54 @@ public class Admin extends Account {
         this.salary = salary;
     }
 }
+
+
+  /*if(input.equals("Y") || input.equals("y") ) {
+            userList.get(0).setSalary(userList.get(0).getRequest());
+        }*/
+
+
+ /*for (int i = 0; i < userList.size(); i++) {
+                if (userList.get(i).getUsername().equals(username)) {
+                    userList.get(i).setSalary(userList.get(i).getRequest());
+                }
+            }*/
+ /*   try {
+            username = scan.nextLine();
+        } catch (Exception InputMismatchException) {
+            System.out.println("Wrong input");
+            username = "chips";
+        }*/
+
+
+ /*boolean wrongInput;
+
+        System.out.println("Id:");
+        wrongInput = false;*/
+
+     /*   while(true) {
+            System.out.println("Id");
+            id = scan.next();
+            try {
+                Integer.valueOf(id);
+            }
+            catch (NumberFormatException ne) {
+                System.out.println("do right bitch");
+            }
+        }*/
+ /*    do{
+
+         try {
+             System.out.println("tset");
+             id = scan.nextInt();
+             break;
+         } catch (Exception InputMismatchException) {
+             System.out.println("Wrong input");
+
+
+
+
+         } }while (true);*/
 
 /*
 

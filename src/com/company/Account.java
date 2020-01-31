@@ -2,6 +2,8 @@ package com.company;
 
 public class Account {
 
+    //Parent class for User and Admin
+
     public String username;
     public String password;
     public Integer id;
@@ -9,6 +11,7 @@ public class Account {
     public Integer salary;
     public String role;
 
+    // Constructor for Account
     public Account (String newusername, String newpassword, int newid, int newaccountBalance, int newsalary, String newrole)
     {
         username = newusername;
@@ -18,5 +21,4 @@ public class Account {
         salary = newsalary;
         role = newrole;
     }
-
 }
